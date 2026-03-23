@@ -22,7 +22,7 @@ wechat-ai
 | GPT | gpt-4o | `wechat-ai set gpt <key>` |
 | Gemini | gemini-2.0-flash | `wechat-ai set gemini <key>` |
 | MiniMax | MiniMax-Text-01 | `wechat-ai set minimax <key>` |
-| 智谱 (GLM) | glm-4-plus | `wechat-ai set zhipu <key>` |
+| 智谱 (GLM) | glm-4-plus | `wechat-ai set glm <key>` |
 
 支持任何 OpenAI 兼容 API，编辑 `~/.wai/config.json` 即可添加。
 

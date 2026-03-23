@@ -169,12 +169,13 @@ export class Gateway {
             text: `当前模型: ${current}\n可用模型: ${available}\n用法: /model <名称>`,
             replyToken: msg.replyToken,
           });
-        } else if (this.providers.has(arg)) {
+        } else if (this.providers.has(arg.toLowerCase())) {
+          const provider = arg.toLowerCase();
           if (!this.config.userRoutes) this.config.userRoutes = {};
-          this.config.userRoutes[msg.senderId] = arg;
+          this.config.userRoutes[msg.senderId] = provider;
           await channel.send({
             targetId: msg.senderId,
-            text: `已切换到: ${arg}`,
+            text: `已切换到: ${provider}`,
             replyToken: msg.replyToken,
           });
         } else {

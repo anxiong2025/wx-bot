@@ -44,11 +44,11 @@ const DEFAULT_CONFIG: WaiConfig = {
       model: "MiniMax-Text-01",
       apiKeyEnv: "MINIMAX_API_KEY",
     },
-    zhipu: {
+    glm: {
       type: "openai-compatible",
       baseUrl: "https://open.bigmodel.cn/api/paas/v4",
       model: "glm-4-plus",
-      apiKeyEnv: "ZHIPU_API_KEY",
+      apiKeyEnv: "GLM_API_KEY",
     },
   },
   channels: {
