@@ -46,50 +46,61 @@ function printBanner(defaultProvider: string): void {
     bold: "\x1b[1m",
     dim: "\x1b[2m",
     green: "\x1b[32m",
-    cyan: "\x1b[36m",
     gray: "\x1b[90m",
-    bgGray: "\x1b[48;5;236m",
     white: "\x1b[97m",
+    orange: "\x1b[38;5;208m",
+    border: "\x1b[38;5;60m",  // muted blue-gray, similar to Claude Code
   };
 
-  const title = `${c.bold}${c.white} Wechat AI ${c.reset}${c.dim}v${VERSION}${c.reset}`;
-  const welcome = `${c.white}Welcome!${c.reset}`;
-  const bot = [
-    `${c.green}  ╭───╮${c.reset}`,
-    `${c.green}  │° °│${c.reset}`,
-    `${c.green}  ╰─∪─╯${c.reset}`,
-  ];
-  const info = `${c.dim}model: ${defaultProvider} · type /help in chat${c.reset}`;
+  const boxW = 44;
+  const inner = boxW - 2;
+  const b = c.border;
+  const empty = `  ${b}│${c.reset}${" ".repeat(inner)}${b}│${c.reset}`;
 
-  const boxW = 40;
-  const h = "─".repeat(boxW - 2);
   const displayWidth = (s: string) => {
     const stripped = s.replace(/\x1b\[[0-9;]*m/g, "");
     let w = 0;
     for (const ch of stripped) {
-      // CJK characters and fullwidth symbols take 2 columns
       const code = ch.codePointAt(0)!;
       w += (code >= 0x2e80 && code <= 0x9fff) || (code >= 0xf900 && code <= 0xfaff)
         || (code >= 0xfe30 && code <= 0xfe4f) || (code >= 0xff00 && code <= 0xff60) ? 2 : 1;
     }
     return w;
   };
-  const pad = (s: string) => {
-    const space = boxW - 2 - displayWidth(s);
-    return `${c.gray}│${c.reset}${s}${" ".repeat(Math.max(0, space))}${c.gray}│${c.reset}`;
+  const center = (s: string) => {
+    const w = displayWidth(s);
+    const left = Math.floor((inner - w) / 2);
+    const right = inner - w - left;
+    return `  ${b}│${c.reset}${" ".repeat(left)}${s}${" ".repeat(right)}${b}│${c.reset}`;
   };
+  // Title embedded in top border, centered
+  const titleText = ` Wechat AI v${VERSION} `;
+  const titleLen = titleText.length;
+  const sideL = Math.floor((inner - titleLen) / 2);
+  const sideR = inner - titleLen - sideL;
+  const topBorder = `  ${b}╭${"─".repeat(sideL)}${c.reset}${c.bold}${c.white}${titleText}${c.reset}${b}${"─".repeat(sideR)}╮${c.reset}`;
+
+  // Icons: WeChat (green) ◄──► Claude (orange), centered
+  const icons = [
+    `${c.green}╭───╮${c.reset}            ${c.orange}╭───╮${c.reset}`,
+    `${c.green}│° °│${c.reset}   ${c.dim}◄══►${c.reset}   ${c.orange}│◉ ◉│${c.reset}`,
+    `${c.green}╰─∪─╯${c.reset}            ${c.orange}╰─╮─╯${c.reset}`,
+  ];
+
+  const welcome = `${c.bold}${c.white}Welcome!${c.reset}`;
+  const info = `${c.dim}model: ${defaultProvider} · type /help in chat${c.reset}`;
 
   console.log();
-  console.log(`  ${c.gray}╭${h}╮${c.reset}`);
-  console.log(`  ${pad(` ${title}  `)}`);
-  console.log(`  ${c.gray}│${c.reset}${" ".repeat(boxW - 2)}${c.gray}│${c.reset}`);
-  console.log(`  ${pad(`       ${welcome}`)}`);
-  for (const line of bot) {
-    console.log(`  ${pad(`        ${line}`)}`);
+  console.log(topBorder);
+  console.log(empty);
+  console.log(center(welcome));
+  console.log(empty);
+  for (const line of icons) {
+    console.log(center(line));
   }
-  console.log(`  ${c.gray}│${c.reset}${" ".repeat(boxW - 2)}${c.gray}│${c.reset}`);
-  console.log(`  ${pad(` ${info}`)}`);
-  console.log(`  ${c.gray}╰${h}╯${c.reset}`);
+  console.log(empty);
+  console.log(center(info));
+  console.log(`  ${b}╰${"─".repeat(inner)}╯${c.reset}`);
   console.log();
 }
 
