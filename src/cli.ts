@@ -40,6 +40,59 @@ const HELP = `
     /help              显示帮助
 `;
 
+function printBanner(defaultProvider: string): void {
+  const c = {
+    reset: "\x1b[0m",
+    bold: "\x1b[1m",
+    dim: "\x1b[2m",
+    green: "\x1b[32m",
+    cyan: "\x1b[36m",
+    gray: "\x1b[90m",
+    bgGray: "\x1b[48;5;236m",
+    white: "\x1b[97m",
+  };
+
+  const title = `${c.bold}${c.white} Wechat AI ${c.reset}${c.dim}v${VERSION}${c.reset}`;
+  const welcome = `${c.white}Welcome!${c.reset}`;
+  const bot = [
+    `${c.green}  ╭───╮${c.reset}`,
+    `${c.green}  │° °│${c.reset}`,
+    `${c.green}  ╰─∪─╯${c.reset}`,
+  ];
+  const info = `${c.dim}model: ${defaultProvider} · type /help in chat${c.reset}`;
+
+  const boxW = 40;
+  const h = "─".repeat(boxW - 2);
+  const displayWidth = (s: string) => {
+    const stripped = s.replace(/\x1b\[[0-9;]*m/g, "");
+    let w = 0;
+    for (const ch of stripped) {
+      // CJK characters and fullwidth symbols take 2 columns
+      const code = ch.codePointAt(0)!;
+      w += (code >= 0x2e80 && code <= 0x9fff) || (code >= 0xf900 && code <= 0xfaff)
+        || (code >= 0xfe30 && code <= 0xfe4f) || (code >= 0xff00 && code <= 0xff60) ? 2 : 1;
+    }
+    return w;
+  };
+  const pad = (s: string) => {
+    const space = boxW - 2 - displayWidth(s);
+    return `${c.gray}│${c.reset}${s}${" ".repeat(Math.max(0, space))}${c.gray}│${c.reset}`;
+  };
+
+  console.log();
+  console.log(`  ${c.gray}╭${h}╮${c.reset}`);
+  console.log(`  ${pad(` ${title}  `)}`);
+  console.log(`  ${c.gray}│${c.reset}${" ".repeat(boxW - 2)}${c.gray}│${c.reset}`);
+  console.log(`  ${pad(`       ${welcome}`)}`);
+  for (const line of bot) {
+    console.log(`  ${pad(`        ${line}`)}`);
+  }
+  console.log(`  ${c.gray}│${c.reset}${" ".repeat(boxW - 2)}${c.gray}│${c.reset}`);
+  console.log(`  ${pad(` ${info}`)}`);
+  console.log(`  ${c.gray}╰${h}╯${c.reset}`);
+  console.log();
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
@@ -105,10 +158,15 @@ async function main() {
 
     case "update": {
       const { execSync } = await import("node:child_process");
-      console.log("正在更新 wechat-ai...");
+      console.log(`正在更新 wechat-ai... (当前 v${VERSION})`);
       try {
         execSync("npm i -g wechat-ai@latest", { stdio: "inherit" });
-        console.log("\x1b[32m✓\x1b[0m 更新完成");
+        // Read the newly installed version
+        let newVersion = "latest";
+        try {
+          newVersion = execSync("npm info wechat-ai version", { encoding: "utf-8" }).trim();
+        } catch { /* ignore */ }
+        console.log(`\x1b[32m✓\x1b[0m 更新完成 v${VERSION} → v${newVersion}`);
       } catch {
         console.error("\x1b[31m✗\x1b[0m 更新失败，请手动执行: npm i -g wechat-ai@latest");
         process.exit(1);
@@ -130,6 +188,8 @@ async function main() {
     }
 
     default: {
+      printBanner(config.defaultProvider);
+
       const gateway = new Gateway(config);
       gateway.init();
 
@@ -140,7 +200,6 @@ async function main() {
       process.on("SIGINT", shutdown);
       process.on("SIGTERM", shutdown);
 
-      log.info(`wechat-ai v${VERSION}`);
       await gateway.start();
       break;
     }
