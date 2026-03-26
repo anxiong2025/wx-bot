@@ -385,6 +385,14 @@ async function main() {
         }
       }
 
+      // Auto-switch: if default provider has no key but another does, switch to it
+      if (configured.length > 0 && !configured.includes(config.defaultProvider)) {
+        config.defaultProvider = configured[0]!;
+        await saveConfig(config);
+        console.log(`\x1b[36mℹ\x1b[0m 默认模型已自动切换到 ${config.defaultProvider} (已配置 Key)`);
+        console.log();
+      }
+
       printBanner(configured.length > 0 ? config.defaultProvider : "");
 
       if (configured.length === 0) {
