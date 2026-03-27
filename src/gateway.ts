@@ -827,7 +827,7 @@ export class Gateway {
             "@模型名 <问题> - 临时用指定模型",
             "@画图 <描述> - 生成图片",
             "",
-            "📖 更多: github.com/anxiong2025/wechat-ai",
+            "📖 更多: https://github.com/anxiong2025/wechat-ai/blob/main/docs/guide.md",
           ].join("\n"),
           replyToken: msg.replyToken,
         });
@@ -853,7 +853,7 @@ export class Gateway {
           "🤖 所有模型均支持: 搜索 · 天气 · 资讯 · 文件 · 命令",
           "",
           "/help 查看全部指令",
-          "📖 更多: github.com/anxiong2025/wechat-ai",
+          "📖 更多: https://github.com/anxiong2025/wechat-ai/blob/main/docs/guide.md",
         ].join("\n");
         await channel.send({
           targetId: msg.senderId,

@@ -128,30 +128,9 @@ wechat-ai set openrouter sk-or-xxx
 
 ### Agent 能力（所有模型）
 
-v0.4.0 起，所有模型均具备 Agent 能力，不只是对话：
+v0.4.0 起，所有模型均具备 Agent 能力：搜索网页、查天气资讯、读写文件、执行命令。由 [claw-agent-sdk](https://github.com/anxiong2025/claw-agent-sdk) 驱动，无需额外配置。
 
-| 能力 | 示例 | 说明 |
-|------|------|------|
-| 🔍 搜索网页 | "今天深圳天气如何" | 自动搜索实时信息 |
-| 📰 查资讯 | "最新的 AI 行业动态" | 搜索国内外新闻 |
-| 📂 读取文件 | "读取 package.json 内容" | 读取服务器上的文件 |
-| ✏️ 写入文件 | "创建一个 hello.txt" | 创建或修改文件 |
-| 🔎 搜索文件 | "找到所有 .ts 文件" | 按模式匹配文件路径 |
-| 💻 执行命令 | "运行 npm test" | 执行 shell 命令 |
-| 🌐 抓取网页 | "抓取这个 URL 的内容" | 获取指定网页内容 |
-
-由 [claw-agent-sdk](https://github.com/anxiong2025/claw-agent-sdk) 提供，无需额外配置。
-
-### 免费第三方模型
-
-配置 OpenRouter Key 后，可使用免费模型：
-
-```
-/model stepfun/step-3.5-flash:free
-/model nvidia/nemotron-3-super-120b-a12b:free
-```
-
-更多免费模型见 [OpenRouter Models](https://openrouter.ai/models)（筛选 Prompt pricing: $0）。
+详见 [完整使用指南](docs/guide.md#agent-能力)。
 
 ## 高级配置
 
