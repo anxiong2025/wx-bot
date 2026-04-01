@@ -90,6 +90,7 @@ wechat-ai update                 # 更新到最新版
 | Gemini | gemini-2.0-flash | `wechat-ai set gemini <key>` | [申请](https://aistudio.google.com/apikey) |
 | MiniMax | MiniMax-Text-01 | `wechat-ai set minimax <key>` | [申请](https://platform.minimaxi.com/user-center/basic-information/interface-key) |
 | 智谱 (GLM) | glm-4-plus | `wechat-ai set glm <key>` | [申请](https://open.bigmodel.cn/usercenter/apikeys) |
+| Kimi (Moonshot) | moonshot-v1-8k | `wechat-ai set kimi <key>` | [申请](https://platform.moonshot.cn/console/api-keys) |
 | OpenRouter | 300+ 第三方模型 | `wechat-ai set openrouter <key>` | [申请](https://openrouter.ai/settings/keys) |
 
 支持任何 OpenAI 兼容 API，编辑 `~/.wai/config.json` 即可添加。

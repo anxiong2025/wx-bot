@@ -34,6 +34,7 @@ const HELP = `
     wechat-ai set qwen sk-xxx        设置通义千问 Key
     wechat-ai set deepseek sk-xxx    设置 DeepSeek Key
     wechat-ai set claude sk-xxx      设置 Claude Key
+    wechat-ai set kimi sk-xxx        设置 Kimi (Moonshot) Key
     wechat-ai set openrouter sk-xxx  设置 OpenRouter Key (第三方模型)
 
   \x1b[1m设置默认模型:\x1b[0m

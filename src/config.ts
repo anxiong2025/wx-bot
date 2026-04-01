@@ -50,6 +50,12 @@ const DEFAULT_CONFIG: WaiConfig = {
       model: "glm-4-plus",
       apiKeyEnv: "GLM_API_KEY",
     },
+    kimi: {
+      type: "claw-agent",
+      baseUrl: "https://api.moonshot.cn/v1",
+      model: "moonshot-v1-8k",
+      apiKeyEnv: "MOONSHOT_API_KEY",
+    },
     openrouter: {
       type: "claw-agent",
       baseUrl: "https://openrouter.ai/api/v1",
