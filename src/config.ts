@@ -80,6 +80,7 @@ const DEFAULT_CONFIG: WaiConfig = {
   },
   systemPrompt: "You are a helpful AI assistant. Always reply in the same language the user uses. Respond concisely.",
   chunkSize: 4000,
+  loginMessage: null,
   skills: {
     translator: {
       description: "中英翻译助手",
